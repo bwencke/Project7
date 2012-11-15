@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="submit_button" type="id"/>
+    <item name="locations_spinner" type="id" />
+    <item name="status_textview" type="id" />
+    <item name="ready_button" type="id" />
+</resources>

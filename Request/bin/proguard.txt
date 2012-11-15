@@ -1,0 +1,3 @@
+# view AndroidManifest.xml #generated:14
+-keep class edu.purdue.cs.cs180.safewalk.RequestActivity { <init>(...); }
+
