@@ -1,5 +1,5 @@
 /**
- * Project 6 -- Server
+ * Project 7 -- Server
  * A server that interacts with the Request and Response GUI's.  The server itself has a CLI and can be 
  * terminated by typing exit into the console.  To run the server requires one argmuent, the port it is
  * to run on.  
