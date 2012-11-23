@@ -1,5 +1,16 @@
 package edu.purdue.cs.cs180.safewalk;
-
+/**
+ * Project 7 -- SafeWalk 2.0 (Request, Android)
+ * provides a GUI for users to request a ride from one of 5 location around campus,
+ * and allows them to choose the urgency of their need
+ * 
+ * @author Ben Wencke
+ * 
+ * @recitation RM5 (Julian Stephen)
+ * 
+ * @date November 23, 2012
+ *
+ */
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,9 +33,10 @@ public class RequestActivity extends Activity implements MessageListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_request);
 
-		// the submit button.
+		// gui elements
 		final Button button = (Button) findViewById(R.id.submit_button);
 		final Spinner locations = (Spinner) findViewById(R.id.locations_spinner);
+		final Spinner urgency = (Spinner) findViewById(R.id.urgency_spinner);
 		final TextView status = (TextView) findViewById(R.id.status_textview);
 
 		try {
@@ -50,6 +62,7 @@ public class RequestActivity extends Activity implements MessageListener {
 					case Assigned:
 						msgStr = "Assigned: " + safeWalkMessage.getInfo();
 						locations.setEnabled(true); // re-enable components
+						urgency.setEnabled(true);
 						button.setEnabled(true);
 						break;
 					default:
@@ -62,12 +75,16 @@ public class RequestActivity extends Activity implements MessageListener {
 		// The on click event.
 		button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				Spinner locations = (Spinner) findViewById(R.id.locations_spinner);
-				String selectedItem = (String) locations.getSelectedItem();
+				// get info
+				String selectedLocation = (String) locations.getSelectedItem(); // get location
+				String selectedUrgency = (String) urgency.getSelectedItem(); // get urgency
+				
+				// disable drop downs
 				locations.setEnabled(false);
 				button.setEnabled(false);
+				
 				try {
-					channel.sendMessage("Request:" + selectedItem); // send message with location
+					channel.sendMessage("Request:" + selectedLocation + "|" + selectedUrgency); // send message with location
 				} catch (ChannelException e) {
 					e.printStackTrace();
 				}

@@ -5,11 +5,23 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.TextView;
 import edu.purdue.cs.cs180.channel.ChannelException;
 import edu.purdue.cs.cs180.channel.MessageListener;
 import edu.purdue.cs.cs180.channel.TCPChannel;
-
+/**
+ * Project 7 -- Kindle Response
+ * provides a GUI for volunteers to respond to requests for rides,
+ * which then sends the response team to a server
+ * 
+ * @author cservaas
+ * 
+ * @recitation RM5 (Julian Stephen)
+ * 
+ * @date November 24, 2012
+ *
+ */
 public class ResponseActivity extends Activity implements MessageListener {
 
 	TCPChannel channel = null;
@@ -20,8 +32,9 @@ public class ResponseActivity extends Activity implements MessageListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_response);
 
-		// the ready button.
+		// the ready button and locations spinner
 		final Button button = (Button) findViewById(R.id.ready_button);
+		final Spinner locations = (Spinner) findViewById(R.id.locations_spinner);
 		final TextView status = (TextView) findViewById(R.id.status_textview);
 
 		try {
@@ -46,6 +59,7 @@ public class ResponseActivity extends Activity implements MessageListener {
 						break;
 					case Assigned:
 						msgStr = "Assigned: " + safeWalkMessage.getInfo();
+						locations.setEnabled(true);
 						button.setEnabled(true);
 						break;
 					default:
@@ -58,9 +72,14 @@ public class ResponseActivity extends Activity implements MessageListener {
 		// The on click event.
 		button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				String selectedLocation = (String) locations.getSelectedItem(); // get location
+				
+				// disable gui elements
+				locations.setEnabled(false);
 				button.setEnabled(false);
+				
 				try {
-					channel.sendMessage("Response:" + "Help Team " + channel.getID()); // send message with team
+					channel.sendMessage("Response:" + "Help Team " + channel.getID() + "|" + selectedLocation); // send message with team
 				} catch (ChannelException e) {
 					e.printStackTrace();
 				}

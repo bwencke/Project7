@@ -8,6 +8,9 @@
 package edu.purdue.cs.cs180.safewalk;
 
 public final class R {
+    public static final class array {
+        public static final int locations=0x7f060000;
+    }
     public static final class attr {
     }
     public static final class drawable {
@@ -24,10 +27,11 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f050000;
-        public static final int host_name=0x7f050004;
-        public static final int menu_settings=0x7f050002;
-        public static final int port_number=0x7f050005;
-        public static final int ready=0x7f050001;
-        public static final int title_activity_response=0x7f050003;
+        public static final int host_name=0x7f050005;
+        public static final int location=0x7f050001;
+        public static final int menu_settings=0x7f050003;
+        public static final int port_number=0x7f050006;
+        public static final int ready=0x7f050002;
+        public static final int title_activity_response=0x7f050004;
     }
 }
