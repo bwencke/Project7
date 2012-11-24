@@ -80,7 +80,7 @@ class Server{
           }else{//if there are responders then...
             int respondersIndex = getRespondersIndex(location, urgency, MATCH_TYPE);
             
-            channel.sendMessage("Assigned:" + respondersTeam.remove(respondersIndex) + ".  Time to your location is approximately " + distance(respondersLocation.remove(respondersIndex), location) + " mitnute(s).", clientID);//sends a message to the requester telling them a responder has been assigned and what team that responder is on
+            channel.sendMessage("Assigned:" + respondersTeam.remove(respondersIndex) + ".  Time to your location is approximately " + distance(respondersLocation.remove(respondersIndex), location) + " minute(s).", clientID);//sends a message to the requester telling them a responder has been assigned and what team that responder is on
             channel.sendMessage("Assigned:" + location + " - " + urgency, respondersID.remove(respondersIndex));//tells the longest waiting responder they have been assigned and the location of the requester they are to help
           }
         }catch(ChannelException e){//catch for all that channel stuff
