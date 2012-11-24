@@ -30,6 +30,7 @@ class Server{
     requestersID = new LinkedList<Integer>();
     respondersID = new LinkedList<Integer>();
     requestersLocation = new LinkedList<String>();
+    respondersLocation = new LinkedList<String>();
     respondersTeam = new LinkedList<String>();
     requestersUrgency = new LinkedList<String>();
     
@@ -98,7 +99,7 @@ class Server{
           }else{//if there are backlogged requesters then...
             int requestersIndex = getRequestersIndex(helpTeam, location, MATCH_TYPE);
             
-            channel.sendMessage("Assigned:" + helpTeam + ".  Time to your location is approximately " + distance(location, requestersLocation.get(requestersIndex)) + " mitnute(s).", requestersID.remove(requestersIndex));//tell the longest waiting requester a responder has been assigned and the team of that responder
+            channel.sendMessage("Assigned:" + helpTeam + ".  Time to your location is approximately " + distance(location, requestersLocation.get(requestersIndex)) + " minute(s).", requestersID.remove(requestersIndex));//tell the longest waiting requester a responder has been assigned and the team of that responder
             channel.sendMessage("Assigned:" + requestersLocation.remove(requestersIndex) + " - " + requestersUrgency.remove(requestersIndex), clientID);//tell the responder they have been assigned and the location of the requester they are picking up
           }
         }catch(ChannelException e){//catch for all that channel stuff
@@ -111,13 +112,13 @@ class Server{
         String clientType = splitString[0];
         
         if(clientType.equals("Request")){
-          splitString = splitString[1].split("|");
+          splitString = splitString[1].split("\\|");
           String location = splitString[0];
           String urgency = splitString[1];
           
           requestInterpreter(location, urgency, clientID);
         }else if(clientType.equals("Response")){
-          splitString = splitString[1].split("|");
+          splitString = splitString[1].split("\\|");
           String helpTeam = splitString[0];
           String location = splitString[1];
           
