@@ -41,7 +41,6 @@ class Server{
             return 0;
             
           case 1://Closest
-            System.out.println("Closest case used!!!"); //##############################
           case 2://Urgency
             return getShortestDistanceIndex(location, respondersLocation);
             
@@ -160,18 +159,14 @@ class Server{
    * @return the resulting index into the arraylist OR -1
    */
   public static int getShortestDistanceIndex(String start, LinkedList<String> endList){
-    int min = 100;
-    int minIndex = -1;
+    int min = Integer.MAX_VALUE; //the min distance from start to any location in the endlist
+    int minIndex = -1; //the index of the closest location in endList that has been waiting the longest
     
-    System.out.println("The List of avalable respender locations in indexed order: Array size: " + endList.size()); //######################
     for(int i = 0; i < endList.size(); i++){
-      System.out.println(endList.get(i)); //###################
       if (distance(start, endList.get(i)) < min){
         min = distance(start, endList.get(i));
         minIndex = i;
       }
-      
-      System.out.println("\nThe shortest distance was at index " + minIndex + " and of distance " + min); //####################
     }
     return minIndex;
   }
