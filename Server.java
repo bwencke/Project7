@@ -20,9 +20,9 @@ class Server{
   public TCPChannel channel;//probably should have a get method for the request and responder channels but made them public insead because im lazy
   private LinkedList<Integer> requestersID;//list of backlogged requesters
   private LinkedList<Integer> respondersID;//list of backlogged responders
-  private LinkedList<String> requestersUrgency;//list of the requesters urgency levels
   private LinkedList<String> requestersLocation;//list of places that the requesters are located at.  Corresponds to the requester ID list
   private LinkedList<String> respondersLocation;//list of the locations of the requesters
+  private LinkedList<String> requestersUrgency;//list of the requesters urgency levels
   private LinkedList<String> respondersTeam;//list of teams that the responders are on.  Corresponds to the responder ID list.
   
   public Server(int port, final int MATCH_TYPE){
@@ -31,9 +31,8 @@ class Server{
     respondersID = new LinkedList<Integer>();
     requestersLocation = new LinkedList<String>();
     respondersLocation = new LinkedList<String>();
-    respondersTeam = new LinkedList<String>();
     requestersUrgency = new LinkedList<String>();
-    respondersLocation = new LinkedList<String>();
+    respondersTeam = new LinkedList<String>();
     
     channel.setMessageListener(new MessageListener(){
       private int getRespondersIndex(String location, String urgency){
@@ -42,6 +41,7 @@ class Server{
             return 0;
             
           case 1://Closest
+            System.out.println("Closest case used!!!"); //##############################
           case 2://Urgency
             return getShortestDistanceIndex(location, respondersLocation);
             
@@ -160,15 +160,18 @@ class Server{
    * @return the resulting index into the arraylist OR -1
    */
   public static int getShortestDistanceIndex(String start, LinkedList<String> endList){
-    int min = Integer.MAX_VALUE;
+    int min = 100;
     int minIndex = -1;
     
+    System.out.println("The List of avalable respender locations in indexed order:"); //######################
     for(int i = 0; i < endList.size(); i++){
+      System.out.println(endList.get(i)); //###################
       if (distance(start, endList.get(i)) < min){
         min = distance(start, endList.get(i));
         minIndex = i;
       }
       
+      System.out.println("\nThe shortest distance was at index " + minIndex + " and of distance " + min); //####################
       return minIndex;
     }
     
