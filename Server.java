@@ -25,7 +25,7 @@ class Server{
   private LinkedList<String> requestersUrgency;//list of the requesters urgency levels
   private LinkedList<String> respondersTeam;//list of teams that the responders are on.  Corresponds to the responder ID list.
   
-  public Server(int port, final int MATCH_TYPE){
+  public Server(int port, final int matchType){
     channel = new TCPChannel(port);//init of all the object variables for the server
     requestersID = new LinkedList<Integer>();
     respondersID = new LinkedList<Integer>();
@@ -36,7 +36,7 @@ class Server{
     
     channel.setMessageListener(new MessageListener(){
       private int getRespondersIndex(String location, String urgency){
-        switch(MATCH_TYPE){
+        switch(matchType){
           case 0://FCFS
             return 0;
             
@@ -50,11 +50,11 @@ class Server{
       }
       
       private int getRequestersIndex(String helpTeam, String location){
-        switch(MATCH_TYPE){
+        switch(matchType){
           case 0://FCFS
-          case 1://Closest
             return 0;
-            
+          case 1://Closest
+            return getShortestDistanceIndex(location, requestersLocation);
           case 2://Urgency
             if(requestersUrgency.indexOf("Emergency") != -1)
             return requestersUrgency.indexOf("Emergency");
@@ -207,31 +207,25 @@ class Server{
   
   public static void main(String[] args){
     Scanner s = new Scanner(System.in);//to get input from the console
-    final int MATCH_TYPE;//the match type encoded in an int as 0,1, or 2
+    int matchType;//the match type encoded in an int as 0,1, or 2
+    
+    try{
     if (args[1].equalsIgnoreCase("FCFS")){
-      MATCH_TYPE = 0;
+      matchType = 0;
     } else if (args[1].equalsIgnoreCase("CLOSEST")) {
-      MATCH_TYPE = 1;
+      matchType = 1;
     } else if (args[1].equalsIgnoreCase("URGENCY")) {
-      MATCH_TYPE = 2;
+      matchType = 2;
     } else {
-      MATCH_TYPE = -1;
+      matchType = -1;
       System.out.println("Second arg must be FCFS, Closest, or Urgency!!!");
       System.exit(1);
     }
-    
-    Server server = new Server(Integer.parseInt(args[0]), MATCH_TYPE);//creates a server object that uses a port passed from the comsole
-    
-    /*while(true){//a loop that runs until "exit" is typed into the console
-      if(s.nextLine().equals("exit")){
-        try{
-          server.channel.close();
-        }catch(ChannelException e){
-          System.out.println("Channel failed to close");
-          e.printStackTrace();
-        }
-        break;
-      }
-    }*/
+    }catch(Exception e){
+      System.out.println("Server must have an run mode passed as the second argument!!!");
+      System.exit(1);
+      matchType = -1;
+    }
+    Server server = new Server(Integer.parseInt(args[0]), matchType);//creates a server object that uses a port passed from the comsole
   }
 }
