@@ -172,10 +172,8 @@ class Server{
       }
       
       System.out.println("\nThe shortest distance was at index " + minIndex + " and of distance " + min); //####################
-      return minIndex;
     }
-    
-    return -1;
+    return minIndex;
   }
   
   /**
