@@ -163,7 +163,7 @@ class Server{
     int min = 100;
     int minIndex = -1;
     
-    System.out.println("The List of avalable respender locations in indexed order:"); //######################
+    System.out.println("The List of avalable respender locations in indexed order: Array size: " + endList.size()); //######################
     for(int i = 0; i < endList.size(); i++){
       System.out.println(endList.get(i)); //###################
       if (distance(start, endList.get(i)) < min){
@@ -229,7 +229,7 @@ class Server{
     
     Server server = new Server(Integer.parseInt(args[0]), MATCH_TYPE);//creates a server object that uses a port passed from the comsole
     
-    while(true){//a loop that runs until "exit" is typed into the console
+    /*while(true){//a loop that runs until "exit" is typed into the console
       if(s.nextLine().equals("exit")){
         try{
           server.channel.close();
@@ -239,6 +239,6 @@ class Server{
         }
         break;
       }
-    }
+    }*/
   }
 }
